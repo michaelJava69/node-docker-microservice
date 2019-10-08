@@ -28,7 +28,7 @@ pipeline {
                 input('Do you want to proceed to build Terraform?')
             }
         }
-
+        
         stage('If Proceed is clicked') {
             steps {
                 print('Terraform')
@@ -40,12 +40,20 @@ pipeline {
 
                 //env.WORKSPACE = pwd()
                   
-
-                sh " sed -i 's/0-0-0-0--0/aws-0-0-0-0--0/g' kubernetes.tf "
-                sh 'terraform upgrade:.012'
-                sh 'terraform init'
-                sh 'terraform apply -auto-approve'
-                
+                withCredentials([[ 
+                       $class: 'AmazonWebServicesCredentialsBinding',
+                       credentialsId: 'aws-key',
+                       accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                       secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                ]]) {
+                       sh " sed -i 's/0-0-0-0--0/aws-0-0-0-0--0/g' /kops/azuka_helm_terraform/kubernetes.tf "
+                       sh 'cd /kops/azuka_helm_terraform/'
+                       sh 'terraform upgrade:.012'
+                       sh 'terraform init'
+                       sh 'terraform apply -auto-approve'
+                       sh 'cd ..'
+                       sh 'cd ..'
+                }
             }
         }
 
