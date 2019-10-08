@@ -67,7 +67,6 @@ pipeline {
        
     }
     post {
-           echo "my stage = ${my_stage}"
         
            failure {
 
