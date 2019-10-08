@@ -1,23 +1,19 @@
-def  MY_STAGE
 pipeline {
     agent any
     stages {
-        
-        stage('KOPS deploy stage') {
-            MY_STAGE='KOPS'
-            environment {
+        stage('Build KOPS Cluster on AWS') {
+             environment {
                 AWS_BIN = '/usr/local/bin/aws'
             }
             steps {
-                 
-		  
-                  withCredentials([[ 
+		
+                  withCredentials([[
                        $class: 'AmazonWebServicesCredentialsBinding',
                        credentialsId: 'aws-key',
                        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
-                   ]]) {
-                        sh './kops/kops.sh' 
+                  ]]) {
+                      sh './kops/kops.sh' 
                  }
 		 
                  echo 'Hello Kops'
@@ -32,9 +28,8 @@ pipeline {
                 input('Do you want to proceed to build Terraform?')
             }
         }
-
+        
         stage('If Proceed is clicked') {
-            MY_STAGE='TERRAFORM'
             steps {
                 print('Terraform')
  
@@ -61,28 +56,8 @@ pipeline {
                 }
             }
         }
-       
+      
     }
-    post {
-        
-           failure {
-
-                //Check for the boolean condition 
-                if (${MY_STAGE}=='KOPS') { 
-                     withCredentials([[ 
-                         $class: 'AmazonWebServicesCredentialsBinding',
-                         credentialsId: 'aws-key',
-                         accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
-                    ]]) {
-                        sh './kops/delete-kops.sh' 
-                    }
-                } else { 
-          
-                } 
-               
-           }
-         
-     }
+   
 
 }
