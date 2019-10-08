@@ -21,7 +21,16 @@ pipeline {
                        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                    ]]) {
-                        sh './kops/kops.sh' 
+
+
+                         sh '''
+                              if [ -d azuka_helm_terraform ]; then rm -Rf azuka_helm_terraform; fi
+                              
+                              ./kops/kops.sh
+
+                         '''
+
+                       
                  }
 		 
                  echo 'Hello Kops'
@@ -62,18 +71,19 @@ pipeline {
                 ]]) {
                        sh '''
                             sed -i 's/"0-0-0-0--0/"aws-0-0-0-0--0/g' azuka_helm_terraform/kubernetes.tf
+                            
+                            // delete terraform file in situ if exits and a data folder                 
                             file="kubernetes.tf"
-
                             if [ -f $file ] ; then
                                  rm $file
                             fi
                             if [ -d data ]; then rm -Rf data; fi 
                        '''
+
+                       // copy terraform file and data folder to location for Jenkins to call
                        sh " cp -n azuka_helm_terraform/kubernetes.tf ."
                        sh " cp -Rvp azuka_helm_terraform/data ."
 
-                       //sh 'cd azuka_helm_terraform/'
-                       //sh ' chmod u+x versions-1.tf '
                        sh 'terraform 0.12upgrade -force -yes '
                        sh 'terraform init'
                        sh 'terraform apply -auto-approve'
@@ -88,24 +98,15 @@ pipeline {
 
                script {
                   //Check for the boolean condition 
-                    if (env.my_stage == 'KOPS') { 
-                         withCredentials([[ 
-                         $class: 'AmazonWebServicesCredentialsBinding',
-                         credentialsId: 'aws-key',
-                         accessKeyVariable: 'AWS_ACCESS_KEY_ID',
-                         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                     withCredentials([[ 
+                     $class: 'AmazonWebServicesCredentialsBinding',
+                     credentialsId: 'aws-key',
+                     accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                     secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                      ]]) {
-                          sh '''
-                              if [ -d azuka_helm_terraform ]; then rm -Rf azuka_helm_terraform; fi
-                              if [ -d data ]; then rm -Rf data; fi
-                               
-                          '''
                         
-                          sh './kops/delete-kops.sh' 
-                       }
-                   } else { 
-          
-                   } 
+                         sh './kops/delete-kops.sh' 
+                     }
                }
            }
          
