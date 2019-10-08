@@ -4,7 +4,6 @@ pipeline {
         stage('Build KOPS Cluster on AWS') {
             steps {
                  echo 'Hello Kops'
-                 env.WORKSPACE = pwd()
                  sh './kops/kops.sh'
 
             }
