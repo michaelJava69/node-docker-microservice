@@ -67,11 +67,6 @@ pipeline {
                        sh '''
                             sed -i 's/"0-0-0-0--0/"aws-0-0-0-0--0/g' azuka_helm_terraform/kubernetes.tf
                             
-                            //file="kubernetes.tf"
-                            //if [ -f $file ] ; then
-                            //     rm $file
-                            //fi
-                            //if [ -d data ]; then rm -Rf data; fi 
                        '''
 
                        // copy terraform file and data folder to location for Jenkins to call
