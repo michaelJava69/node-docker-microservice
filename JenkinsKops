@@ -28,13 +28,11 @@ pipeline {
                 //env.WORKSPACE = pwd()
                   
 
-               // sed -i 's/0-0-0-0--0/aws-0-0-0-0--0/g' kubernetes.tf
-                terraform upgrade:.012
-                terraform init
+                sh " sed -i 's/0-0-0-0--0/aws-0-0-0-0--0/g' kubernetes.tf "
+                sh 'terraform upgrade:.012'
+                sh 'terraform init'
                 sh 'terraform apply -auto-approve'
-                cd ..
-		cd ..
-               
+                
             }
         }
 
