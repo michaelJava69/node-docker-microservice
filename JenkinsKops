@@ -60,9 +60,14 @@ pipeline {
                        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                 ]]) {
-                   //    sh '''
-                   //        sed -i 's/"0-0-0-0--0/"aws-0-0-0-0--0/g' azuka_helm_terraform/kubernetes.tf 
-                   //    '''
+                       sh '''
+                            sed -i 's/"0-0-0-0--0/"aws-0-0-0-0--0/g' azuka_helm_terraform/kubernetes.tf
+                            file="kubernetes.tf"
+
+                            if [ -f $file ] ; then
+                                 rm $file
+                            fi 
+                       '''
                        sh " cp -n azuka_helm_terraform/kubernetes.tf ."
                        //sh 'cd azuka_helm_terraform/'
                        sh 'terraform 0.12upgrade  -yes '
