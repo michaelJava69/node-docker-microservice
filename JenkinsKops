@@ -5,7 +5,7 @@ pipeline {
             steps {
                  echo 'Hello Kops'
                  env.WORKSPACE = pwd()
-                 chmod -x "${env.WORKSPACE}/kops/kops.sh"
+                 // chmod -x "${env.WORKSPACE}/kops/kops.sh"
 
             }
         }
