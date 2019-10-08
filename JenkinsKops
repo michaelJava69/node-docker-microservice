@@ -14,7 +14,6 @@ pipeline {
             }
             steps {
                  
-		  
                   withCredentials([[ 
                        $class: 'AmazonWebServicesCredentialsBinding',
                        credentialsId: 'aws-key',
@@ -72,12 +71,13 @@ pipeline {
                        sh '''
                             sed -i 's/"0-0-0-0--0/"aws-0-0-0-0--0/g' azuka_helm_terraform/kubernetes.tf
                             
-                            // delete terraform file in situ if exits and a data folder                 
-                            file="kubernetes.tf"
-                            if [ -f $file ] ; then
-                                 rm $file
-                            fi
-                            if [ -d data ]; then rm -Rf data; fi 
+                            // delete terraform file in situ if exits and a data folder
+                 
+                            //file="kubernetes.tf"
+                            //if [ -f $file ] ; then
+                            //     rm $file
+                            //fi
+                            //if [ -d data ]; then rm -Rf data; fi 
                        '''
 
                        // copy terraform file and data folder to location for Jenkins to call
@@ -104,8 +104,12 @@ pipeline {
                      accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                      secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                      ]]) {
-                        
-                         sh './kops/delete-kops.sh' 
+                        file="kubernetes.tf"
+                        if [ -f $file ] ; then
+                             rm $file
+                        fi
+                        if [ -d data ]; then rm -Rf data; fi
+                        sh './kops/delete-kops.sh' 
                      }
                }
            }
