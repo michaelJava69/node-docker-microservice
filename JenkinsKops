@@ -61,7 +61,8 @@ pipeline {
                        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                 ]]) {
                        sh " sed -i 's/0-0-0-0--0/aws-0-0-0-0--0/g' azuka_helm_terraform/kubernetes.tf "
-                       sh 'cd azuka_helm_terraform/'
+                       sh " cp -n azuka_helm_terraform/kubernetes.tf ."
+                       //sh 'cd azuka_helm_terraform/'
                        sh 'terraform 0.12upgrade'
                        sh 'terraform init'
                        sh 'terraform apply -auto-approve'
