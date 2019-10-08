@@ -1,10 +1,14 @@
-def  MY_STAGE
+
 pipeline {
     agent any
+    environment {
+        my_stage = ''
+    }
+
     stages {
         
         stage('KOPS deploy stage') {
-            MY_STAGE='KOPS'
+            my_stage = 'KOPS'
             environment {
                 AWS_BIN = '/usr/local/bin/aws'
             }
@@ -34,7 +38,7 @@ pipeline {
         }
 
         stage('If Proceed is clicked') {
-            MY_STAGE='TERRAFORM'
+            my_stage = 'TERRAFORM'
             steps {
                 print('Terraform')
  
@@ -68,7 +72,7 @@ pipeline {
            failure {
 
                 //Check for the boolean condition 
-                if (${MY_STAGE}=='KOPS') { 
+                if (${my_stage}=='KOPS') { 
                      withCredentials([[ 
                          $class: 'AmazonWebServicesCredentialsBinding',
                          credentialsId: 'aws-key',
