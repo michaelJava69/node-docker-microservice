@@ -99,11 +99,6 @@ pipeline {
                          accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                          secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                      ]]) {
-                      //    sh '''
-                      //        if [ -d azuka_helm_terraform ]; then rm -Rf azuka_helm_terraform; fi
-                      //        if [ -d data ]; then rm -Rf data; fi
-
-                      //    '''
 
                           sh './kops/delete-kops.sh'
                      }
@@ -112,6 +107,16 @@ pipeline {
 
                   }
                }
+           }
+           success {
+               echo 'This will run only if successful'
+               mkdir /home/michael/kubenetes-build/build1
+               cp -Rvp  data /home/michael/kubenetes-build/build1/
+               cp -Rvp  .terraform /home/michael/kubenetes-build/build1/
+               cp   versions.tf /home/michael/kubenetes-build/build1/
+               cp   kubernetes.tf /home/michael/kubenetes-build/build1/
+               cp   terraform.tfstate /home/michael/kubenetes-build/build1/
+              
            }
 
      }
