@@ -5,7 +5,7 @@ pipeline {
             steps {
                  echo 'Hello Kops'
                  env.WORKSPACE = pwd()
-                 // chmod -x "${env.WORKSPACE}/kops/kops.sh"
+                 //chmod -x "${env.WORKSPACE}/kops/kops.sh"
 
             }
         }
@@ -28,7 +28,7 @@ pipeline {
                 env.WORKSPACE = pwd()
                 cd "${env.WORKSPACE}/kops/azuka_helm_terraform/"
 
-                sed -i 's/0-0-0-0--0/aws-0-0-0-0--0/g' kubernetes.tf
+               // sed -i 's/0-0-0-0--0/aws-0-0-0-0--0/g' kubernetes.tf
                 terraform upgrade:.012
                 terraform init
                 terraform apply -auto-approve
@@ -38,36 +38,8 @@ pipeline {
             }
         }
 
-        stage('Some Testing') {
-          steps {
-            parallel(
-              "Step 1": {
-                 echo 'Step 1'
-              },
-              "Step 2": {
-                 echo 'Step 2'
-              }
-            )
-          }
-        }
+      
+    }
+   
 
-    }
-    post {
-        always {
-            echo 'This will always run'
-        }
-        success {
-            echo 'This will run only if successful'
-        }
-        failure {
-            echo 'This will run only if failed'
-        }
-        unstable {
-            echo 'This will run only if the run was marked as unstable'
-        }
-        changed {
-            echo 'This will run only if the state of the Pipeline has changed'
-            echo 'For example, if the Pipeline was previously failing but is now successful'
-        }
-    }
 }
