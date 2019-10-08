@@ -75,8 +75,8 @@ pipeline {
 
                        //sh 'cd azuka_helm_terraform/'
                        //sh ' chmod u+x versions-1.tf '
-                       sh 'terraform 0.12upgrade -force -yes '
                        sh 'terraform init'
+                       sh 'terraform 0.12upgrade -force -yes '
                        sh 'terraform apply -auto-approve'
 
 
