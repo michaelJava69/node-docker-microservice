@@ -56,7 +56,22 @@ pipeline {
                 }
             }
         }
+        post {
+        
+           failure {
 
+                print(' Kops failure')
+                withCredentials([[ 
+                       $class: 'AmazonWebServicesCredentialsBinding',
+                       credentialsId: 'aws-key',
+                       accessKeyVariable: 'AWS_ACCESS_KEY_ID',
+                       secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
+                   ]]) {
+                        sh './kops/delete-kops.sh' 
+                 }
+           }
+         
+        }
       
     }
    
