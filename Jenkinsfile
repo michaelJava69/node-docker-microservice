@@ -112,14 +112,14 @@ pipeline {
 
                sh '''
                   echo 'This will run only if successful'
-                  WORKING_DIR=/home/michael/kubenetes-build/build1
+                  WORKING_DIR=/var/lib/jenkins/kubenetes-build/build1
                   if [ -d "$WORKING_DIR" ]; then rm -Rf $WORKING_DIR; fi
-                  mkdir /home/michael/kubenetes-build/build1
-                  cp -Rvp  data /home/michael/kubenetes-build/build1/
-                  cp -Rvp  .terraform /home/michael/kubenetes-build/build1/
-                  cp   versions.tf /home/michael/kubenetes-build/build1/
-                  cp   kubernetes.tf /home/michael/kubenetes-build/build1/
-                  cp   terraform.tfstate /home/michael/kubenetes-build/build1/
+                  mkdir /var/lib/jenkins/kubenetes-build/build1
+                  cp -Rvp  data /var/lib/jenkins/kubenetes-build/build1/
+                  cp -Rvp  .terraform /var/lib/jenkins/kubenetes-build/build1/
+                  cp   versions.tf /var/lib/jenkins/kubenetes-build/build1/
+                  cp   kubernetes.tf /var/lib/jenkins/kubenetes-build/build1/
+                  cp   terraform.tfstate /var/lib/jenkins/kubenetes-build/build1/
               '''
            }
 

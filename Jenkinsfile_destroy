@@ -23,11 +23,11 @@ pipeline {
                        
                        sh '''
 
-                          cp  -Rvp /home/michael/kubenetes-build/build1/data .
-                          cp  -Rvp /home/michael/kubenetes-build/build1/.terraform .
-                          cp  /home/michael/kubenetes-build/build1/versions.tf .
-                          cp  /home/michael/kubenetes-build/build1/kubernetes.tf .
-                          cp  /home/michael/kubenetes-build/build1/terraform.tfstate .
+                          cp  -Rvp /var/lib/jenkins/kubenetes-build/build1/data .
+                          cp  -Rvp /var/lib/jenkins/kubenetes-build/build1/.terraform .
+                          cp  /var/lib/jenkins/kubenetes-build/build1/versions.tf .
+                          cp  /var/lib/jenkins/kubenetes-build/build1/kubernetes.tf .
+                          cp  /var/lib/jenkins/kubenetes-build/build1/terraform.tfstate .
                           terraform destroy -auto-approve
 
                        '''
