@@ -2,7 +2,6 @@ pipeline {
     agent any
      environment {
          AWS_BIN = '/usr/local/bin/aws'
-         my_stage = 'KOPS'
      }
 
     stages {
@@ -21,15 +20,12 @@ pipeline {
                        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                    ]]) {
 
-
                          sh '''
                               if [ -d azuka_helm_terraform ]; then rm -Rf azuka_helm_terraform; fi
-                              
                               ./kops/kops.sh
 
                          '''
-
-                       
+                      
                  }
 		 
                  echo 'Hello Kops'
@@ -81,7 +77,9 @@ pipeline {
                        '''
 
                        // copy terraform file and data folder to location for Jenkins to call
+                       echo "#######"
                        sh " cp  azuka_helm_terraform/kubernetes.tf ."
+                       echo "####"
                        sh " cp -Rvp azuka_helm_terraform/data ."
 
                        sh 'terraform 0.12upgrade -force -yes '
