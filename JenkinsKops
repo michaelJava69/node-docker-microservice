@@ -63,7 +63,7 @@ pipeline {
                        sh " sed -i 's/0-0-0-0--0/aws-0-0-0-0--0/g' azuka_helm_terraform/kubernetes.tf "
                        sh " cp -n azuka_helm_terraform/kubernetes.tf ."
                        //sh 'cd azuka_helm_terraform/'
-                       sh 'terraform 0.12upgrade'
+                       sh 'terraform 0.12upgrade -auto-approve'
                        sh 'terraform init'
                        sh 'terraform apply -auto-approve'
                        sh 'cd ..'
