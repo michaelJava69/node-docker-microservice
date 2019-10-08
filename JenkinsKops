@@ -1,10 +1,10 @@
 pipeline {
     agent any
     stages {
-        environment {
-             AWS_BIN = '/usr/local/bin/aws'
-        }
         stage('Build KOPS Cluster on AWS') {
+             environment {
+                AWS_BIN = '/usr/local/bin/aws'
+            }
             steps {
 		
                   withCredentials([[
