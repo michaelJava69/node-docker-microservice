@@ -4,7 +4,7 @@ pipeline {
         stage('Build KOPS Cluster on AWS') {
             steps {
                  echo 'Hello Kops'
-                 sh -x $WORKSPACE/kops/kops.sh
+                 chmod -x ${env.WORKSPACE}/kops/kops.sh
             }
         }
 
@@ -17,7 +17,13 @@ pipeline {
         stage('If Proceed is clicked') {
             steps {
                 print('Terraform')
-                cd $WORKSPACE/kops/azuka_helm_terraform/
+ 
+                // Permission to execute
+                // sh "chmod +x -R ${env.WORKSPACE}/../${env.JOB_NAME}@script"
+                // Call SH
+                // sh "${env.WORKSPACE}/../${env.JOB_NAME}@script/script.sh"
+
+                cd ${env.WORKSPACE}/kops/azuka_helm_terraform/
 
                 sed -i 's/0-0-0-0--0/aws-0-0-0-0--0/g' kubernetes.tf
                 terraform upgrade:.012
