@@ -70,8 +70,9 @@ pipeline {
         
            failure {
 
-                //Check for the boolean condition 
-                if (my_stage == 'KOPS') { 
+               script {
+                  //Check for the boolean condition 
+                  if (my_stage == 'KOPS') { 
                      withCredentials([[ 
                          $class: 'AmazonWebServicesCredentialsBinding',
                          credentialsId: 'aws-key',
@@ -80,10 +81,10 @@ pipeline {
                     ]]) {
                         sh './kops/delete-kops.sh' 
                     }
-                } else { 
+                  } else { 
           
-                } 
-               
+                  } 
+               }
            }
          
      }
