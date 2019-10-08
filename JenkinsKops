@@ -67,11 +67,12 @@ pipeline {
        
     }
     post {
+           echo "my stage = ${my_stage}"
         
            failure {
 
                 //Check for the boolean condition 
-                if (${my_stage}=='KOPS') { 
+                if (my_stage == 'KOPS') { 
                      withCredentials([[ 
                          $class: 'AmazonWebServicesCredentialsBinding',
                          credentialsId: 'aws-key',
