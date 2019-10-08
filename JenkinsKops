@@ -88,8 +88,11 @@ pipeline {
                          accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                          secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                     ]]) {
-                        sh ' chmod u+x azuka_helm_terraform'
-                        sh ' rm -r azuka_helm_terraform '
+                        sh '''
+                               if [ -d azuka_helm_terraform ]; then rm -Rf azuka_helm_terraform; fi
+                               
+                        '''
+                        //sh ' rm -r azuka_helm_terraform '
                         sh './kops/delete-kops.sh' 
                     }
                   } else { 
