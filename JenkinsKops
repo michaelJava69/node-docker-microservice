@@ -67,8 +67,6 @@ pipeline {
                        sh '''
                             sed -i 's/"0-0-0-0--0/"aws-0-0-0-0--0/g' azuka_helm_terraform/kubernetes.tf
                             
-                            // delete terraform file in situ if exits and a data folder
-                 
                             //file="kubernetes.tf"
                             //if [ -f $file ] ; then
                             //     rm $file
