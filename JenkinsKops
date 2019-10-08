@@ -81,7 +81,7 @@ pipeline {
                        '''
 
                        // copy terraform file and data folder to location for Jenkins to call
-                       sh " cp -n azuka_helm_terraform/kubernetes.tf ."
+                       sh " cp  azuka_helm_terraform/kubernetes.tf ."
                        sh " cp -Rvp azuka_helm_terraform/data ."
 
                        sh 'terraform 0.12upgrade -force -yes '
