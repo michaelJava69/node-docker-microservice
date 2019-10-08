@@ -60,7 +60,7 @@ pipeline {
                        accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                        secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                 ]]) {
-                       sh " sed -i 's/0-0-0-0--0/aws-0-0-0-0--0/g' /kops/azuka_helm_terraform/kubernetes.tf "
+                       sh " sed -i 's/0-0-0-0--0/aws-0-0-0-0--0/g' kops/azuka_helm_terraform/kubernetes.tf "
                        sh 'cd /kops/azuka_helm_terraform/'
                        sh 'terraform upgrade:.012'
                        sh 'terraform init'
