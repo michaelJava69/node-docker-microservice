@@ -3,6 +3,12 @@ pipeline {
     stages {
         stage('Build KOPS Cluster on AWS') {
             steps {
+
+                 @Library('github.com/releaseworks/jenkinslib')
+		
+		 withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'aws-key', usernameVariable: 'AWS_ACCESS_KEY_ID', passwordVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+        AWS("--region=eu-central1 s3 ls")
+
                  echo 'Hello Kops'
                  sh './kops/kops.sh'
 
