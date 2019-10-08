@@ -41,11 +41,11 @@ pipeline {
             environment {
                 AWS_BIN = '/usr/local/bin/aws'
             }
-            script {
-                env.my_stage = 'TERRAFORM'
-            }
             steps {
                 print('Terraform')
+                 script {
+                    env.my_stage = 'TERRAFORM'
+                 }
  
                 // Permission to execute
                 // sh "chmod +x -R ${env.WORKSPACE}/../${env.JOB_NAME}@script"
