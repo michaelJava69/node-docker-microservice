@@ -104,11 +104,14 @@ pipeline {
                      accessKeyVariable: 'AWS_ACCESS_KEY_ID',
                      secretKeyVariable: 'AWS_SECRET_ACCESS_KEY'
                      ]]) {
-                        file="kubernetes.tf"
-                        if [ -f $file ] ; then
+
+                        sh '''
+                           file="kubernetes.tf"
+                           if [ -f $file ] ; then
                              rm $file
-                        fi
-                        if [ -d data ]; then rm -Rf data; fi
+                           fi
+                           if [ -d data ]; then rm -Rf data; fi
+                        '''
                         sh './kops/delete-kops.sh' 
                      }
                }
