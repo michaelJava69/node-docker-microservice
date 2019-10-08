@@ -109,14 +109,18 @@ pipeline {
                }
            }
            success {
-               echo 'This will run only if successful'
-               mkdir /home/michael/kubenetes-build/build1
-               cp -Rvp  data /home/michael/kubenetes-build/build1/
-               cp -Rvp  .terraform /home/michael/kubenetes-build/build1/
-               cp   versions.tf /home/michael/kubenetes-build/build1/
-               cp   kubernetes.tf /home/michael/kubenetes-build/build1/
-               cp   terraform.tfstate /home/michael/kubenetes-build/build1/
-              
+
+               sh '''
+                  echo 'This will run only if successful'
+                  WORKING_DIR=/home/michael/kubenetes-build/build1
+                  if [ -d "$WORKING_DIR" ]; then rm -Rf $WORKING_DIR; fi
+                  mkdir /home/michael/kubenetes-build/build1
+                  cp -Rvp  data /home/michael/kubenetes-build/build1/
+                  cp -Rvp  .terraform /home/michael/kubenetes-build/build1/
+                  cp   versions.tf /home/michael/kubenetes-build/build1/
+                  cp   kubernetes.tf /home/michael/kubenetes-build/build1/
+                  cp   terraform.tfstate /home/michael/kubenetes-build/build1/
+              '''
            }
 
      }
