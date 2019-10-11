@@ -2,7 +2,6 @@ pipeline {
     agent any
      environment {
          AWS_BIN = '/usr/local/bin/aws'
-         my_stage = 'KOPS'
      }
 
     stages {
@@ -43,9 +42,6 @@ pipeline {
             }
             steps {
                 print('Terraform')
-                 script {
-                    env.my_stage = 'TERRAFORM'
-                 }
 
                 // Permission to execute
                 // sh "chmod +x -R ${env.WORKSPACE}/../${env.JOB_NAME}@script"
@@ -92,7 +88,6 @@ pipeline {
 
                script {
                    //Check for the boolean condition
-                   if (env.my_stage == 'KOPS') {
                      withCredentials([[
                          $class: 'AmazonWebServicesCredentialsBinding',
                          credentialsId: 'aws-key',
@@ -103,9 +98,6 @@ pipeline {
                           sh './kops/delete-kops.sh'
                      }
 
-                     } else {
-
-                  }
                }
            }
            success {
