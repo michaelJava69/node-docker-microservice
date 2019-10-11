@@ -13,7 +13,8 @@ pipeline {
             }
             steps {
 
-
+                  echo 'The beginning of Kops creation'
+ 
                   withCredentials([[
                        $class: 'AmazonWebServicesCredentialsBinding',
                        credentialsId: 'aws-key',
@@ -23,7 +24,7 @@ pipeline {
                         sh './kops/kops.sh'
                  }
 
-                 echo 'Hello Kops'
+                 
 
 
 
